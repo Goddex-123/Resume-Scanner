@@ -1,0 +1,60 @@
+JOHN DOE
+Data Scientist | Machine Learning Engineer
+Email: john.doe@email.com | Phone: (555) 123-4567
+LinkedIn: linkedin.com/in/johndoe | GitHub: github.com/johndoe
+
+SUMMARY
+Experienced Data Scientist with 3+ years of experience in machine learning, deep learning, and data analysis. Skilled in Python, TensorFlow, and cloud platforms. Passionate about solving complex problems with data-driven solutions.
+
+EXPERIENCE
+
+Senior Data Scientist | Tech Company Inc.
+January 2022 - Present
+- Developed machine learning models for customer churn prediction, achieving 92% accuracy
+- Built and deployed NLP pipelines using Python, spaCy, and Hugging Face Transformers
+- Created interactive dashboards using Tableau and Power BI for executive reporting
+- Led a team of 3 data analysts on customer segmentation projects
+- Reduced model training time by 40% through hyperparameter optimization
+
+Data Analyst | StartUp Corp
+June 2020 - December 2021
+- Performed exploratory data analysis on customer behavior datasets using Pandas and NumPy
+- Built automated reporting pipelines using SQL and Python
+- Collaborated with product team to define key performance metrics
+- Implemented A/B testing framework for feature experimentation
+
+EDUCATION
+
+Master of Science in Data Science
+University of Technology | 2020
+GPA: 3.8/4.0
+
+Bachelor of Science in Computer Science
+State University | 2018
+GPA: 3.6/4.0
+
+SKILLS
+
+Programming: Python, R, SQL, JavaScript
+ML/AI: TensorFlow, PyTorch, scikit-learn, XGBoost, Keras
+Data Tools: Pandas, NumPy, Matplotlib, Seaborn, Plotly
+Databases: PostgreSQL, MongoDB, Redis
+Cloud: AWS (S3, EC2, SageMaker), GCP, Docker
+Visualization: Tableau, Power BI, Looker
+Other: Git, Agile, Scrum, JIRA
+
+CERTIFICATIONS
+
+- AWS Certified Machine Learning - Specialty
+- Google Professional Data Engineer
+- TensorFlow Developer Certificate
+
+PROJECTS
+
+Customer Churn Prediction System
+- Built end-to-end ML pipeline for predicting customer churn with 92% accuracy
+- Technologies: Python, XGBoost, FastAPI, Docker, AWS
+
+Sentiment Analysis Dashboard
+- Developed real-time sentiment analysis tool for social media monitoring
+- Technologies: Python, BERT, Streamlit, Plotly

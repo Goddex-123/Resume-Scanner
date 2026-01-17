@@ -1,0 +1,65 @@
+{
+  "programming_languages": [
+    "Python",
+    "Java",
+    "JavaScript",
+    "TypeScript",
+    "C++",
+    "C#",
+    "Go",
+    "Rust",
+    "Ruby",
+    "Swift",
+    "Kotlin",
+    "Scala",
+    "PHP",
+    "R",
+    "MATLAB",
+    "Julia",
+    "SQL"
+  ],
+  "frameworks": {
+    "python": [
+      "Django",
+      "Flask",
+      "FastAPI",
+      "Streamlit",
+      "Pandas",
+      "NumPy",
+      "TensorFlow",
+      "PyTorch",
+      "scikit-learn"
+    ],
+    "javascript": ["React", "Angular", "Vue", "Node.js", "Express", "Next.js"],
+    "java": ["Spring", "Spring Boot", "Hibernate"],
+    "other": ["Rails", ".NET", "Flutter", "React Native"]
+  },
+  "data_science": [
+    "Machine Learning",
+    "Deep Learning",
+    "NLP",
+    "Computer Vision",
+    "Data Analysis",
+    "Feature Engineering",
+    "Model Deployment",
+    "A/B Testing",
+    "Statistics"
+  ],
+  "cloud_platforms": ["AWS", "GCP", "Azure", "Docker", "Kubernetes"],
+  "databases": [
+    "MySQL",
+    "PostgreSQL",
+    "MongoDB",
+    "Redis",
+    "Elasticsearch",
+    "Snowflake",
+    "BigQuery"
+  ],
+  "soft_skills": [
+    "Leadership",
+    "Communication",
+    "Teamwork",
+    "Problem Solving",
+    "Project Management"
+  ]
+}

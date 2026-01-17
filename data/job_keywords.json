@@ -1,0 +1,18 @@
+{
+    "data_scientist": [
+        "python", "r", "sql", "machine learning", "deep learning", "statistics",
+        "tensorflow", "pytorch", "pandas", "numpy", "visualization", "nlp"
+    ],
+    "data_analyst": [
+        "sql", "excel", "tableau", "power bi", "python", "statistics", "reporting"
+    ],
+    "ml_engineer": [
+        "python", "tensorflow", "pytorch", "docker", "kubernetes", "mlops", "aws"
+    ],
+    "software_engineer": [
+        "python", "java", "javascript", "git", "agile", "api", "microservices"
+    ],
+    "data_engineer": [
+        "python", "sql", "spark", "airflow", "etl", "aws", "data warehouse"
+    ]
+}
