@@ -5,6 +5,8 @@
 ![Docker](https://img.shields.io/badge/docker-ready-blue)
 ![CI Status](https://github.com/Goddex-123/Resume-Scanner/actions/workflows/ci.yml/badge.svg)
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-brightgreen?style=for-the-badge&logo=streamlit)](https://resume-scanner-sohambarate.streamlit.app)
+
 > **Advanced Applicant Tracking System (ATS) simulator using NLP to analyze resumes against job descriptions and provide actionable optimization feedback.**
 
 ---
