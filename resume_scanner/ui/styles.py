@@ -40,60 +40,22 @@ CUSTOM_CSS = """
             radial-gradient(ellipse 60% 50% at 80% 50%, rgba(6,182,212,0.08), transparent),
             radial-gradient(ellipse 60% 50% at 20% 80%, rgba(244,114,182,0.06), transparent);
         background-attachment: fixed;
-        position: relative;
-        z-index: 0;
     }
 
-    /* Ensure content sits above decorative pseudo-elements */
-    .stApp > *,
-    [data-testid="stAppViewContainer"],
-    [data-testid="stAppViewBlockContainer"],
-    [data-testid="stHeader"],
-    .block-container,
-    section[data-testid="stSidebar"] {
-        position: relative;
-        z-index: 999;
-    }
-
-    /* Dot-grid overlay (pure CSS, GPU-accelerated) */
-    .stApp::before {
-        content: '';
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
+    /* Safe dot-grid overlay via container background instead of pseudo-elements */
+    [data-testid="stAppViewContainer"] {
         background-image: radial-gradient(rgba(139,92,246,0.08) 1px, transparent 1px);
         background-size: 32px 32px;
-        pointer-events: none;
-        z-index: -1;
         animation: dotDrift 20s linear infinite;
     }
 
     @keyframes dotDrift {
-        0% { transform: translate3d(0, 0, 0); }
-        100% { transform: translate3d(32px, 32px, 0); }
+        from { background-position: 0 0; }
+        to { background-position: 32px 32px; }
     }
 
-    /* Floating orbs (CSS only) */
-    .stApp::after {
-        content: '';
-        position: fixed;
-        width: 400px; height: 400px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%);
-        top: 20%; right: -100px;
-        pointer-events: none;
-        z-index: -1;
-        animation: orbFloat 12s ease-in-out infinite alternate;
-        will-change: transform;
-    }
-
-    @keyframes orbFloat {
-        0% { transform: translate3d(0, 0, 0) scale(1); }
-        50% { transform: translate3d(-60px, 40px, 0) scale(1.15); }
-        100% { transform: translate3d(30px, -30px, 0) scale(0.9); }
-    }
-
-    /* Hide Streamlit defaults */
-    #MainMenu, footer, header { visibility: hidden; }
+    /* Hide Streamlit defaults safely */
+    [data-testid="stHeader"], footer { visibility: hidden !important; }
 
     /* ============== GLOBAL ENTRANCE ANIMATION ============== */
     @keyframes fadeSlideUp {
