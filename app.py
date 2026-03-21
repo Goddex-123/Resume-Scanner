@@ -414,7 +414,47 @@ def run_analysis(text: str, target_role: str, run_ats: bool, run_skills: bool,
             _stat_bar("Sentences", text_quality['sentence_count'], 60, "#06b6d4")
             _stat_bar("Avg Sentence Length", text_quality['avg_sentence_length'], 30, "#f472b6")
             _stat_bar("Action Verbs", text_quality['action_verb_count'], 20, "#10b981")
+            
+            # Action verbs badge list
+            found_verbs = text_quality.get('found_action_verbs', [])
+            if found_verbs:
+                st.markdown('<div style="margin-top: 12px; font-size: 0.85rem; color: #94a3b8;">Action Verbs Found:</div>', unsafe_allow_html=True)
+                badges = ''.join([f'<span class="skill-badge" style="border-color:rgba(16,185,129,0.3); font-size: 0.75rem; padding: 2px 6px; margin: 2px;">{v.title()}</span>' for v in found_verbs])
+                st.markdown(f'<div style="margin-top: 4px; display: flex; flex-wrap: wrap;">{badges}</div>', unsafe_allow_html=True)
+                
             st.markdown("</div>", unsafe_allow_html=True)
+
+            # Formatting & Structure Checks
+            st.markdown("""
+            <div class="analysis-card" style="margin-top:16px;">
+                <div class="analysis-card-title">📐 Formatting & Structure</div>
+            """, unsafe_allow_html=True)
+            
+            # Word count check
+            wc = text_quality['word_count']
+            if 300 <= wc <= 800:
+                wc_icon, wc_color, wc_text = "✅", "#10b981", "Optimal Length (300-800 words)"
+            elif wc < 300:
+                wc_icon, wc_color, wc_text = "⚠️", "#f59e0b", "Too Short (under 300 words)"
+            else:
+                wc_icon, wc_color, wc_text = "⚠️", "#f59e0b", "Too Long (over 800 words)"
+                
+            # Bullet point check
+            import re
+            has_bullets = bool(re.search(r'[•\-\*]\s+', text)) if text else False
+            bp_icon, bp_color, bp_text = ("✅", "#10b981", "Uses Bullet Points") if has_bullets else ("❌", "#ef4444", "No Bullet Points Detected")
+            
+            st.markdown(f"""
+            <div style="display:flex; align-items:center; margin-bottom:10px;">
+                <span style="font-size:1.2rem; margin-right:10px;">{wc_icon}</span>
+                <span style="color:{wc_color}; font-weight:500;">{wc_text}</span>
+            </div>
+            <div style="display:flex; align-items:center;">
+                <span style="font-size:1.2rem; margin-right:10px;">{bp_icon}</span>
+                <span style="color:{bp_color}; font-weight:500;">{bp_text}</span>
+            </div>
+            </div>
+            """, unsafe_allow_html=True)
 
         with di2:
             # Keyword Density
@@ -469,7 +509,8 @@ def _empty_tq():
     return {
         'word_count': 0, 'sentence_count': 0, 'avg_word_length': 0,
         'avg_sentence_length': 0, 'vocabulary_richness': 0,
-        'action_verb_count': 0, 'action_verb_percentage': 0
+        'action_verb_count': 0, 'action_verb_percentage': 0,
+        'found_action_verbs': []
     }
 
 

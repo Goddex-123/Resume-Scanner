@@ -285,7 +285,6 @@ class NLPEngine:
         unique_words = set(w.lower() for w in words)
         ttr = len(unique_words) / max(word_count, 1)
         
-        # Count action verbs
         action_verbs = {
             'achieved', 'built', 'created', 'designed', 'developed', 'established',
             'implemented', 'improved', 'increased', 'launched', 'led', 'managed',
@@ -295,7 +294,8 @@ class NLPEngine:
             'collaborated', 'coordinated', 'demonstrated', 'engineered', 'enhanced'
         }
         
-        action_verb_count = sum(1 for w in words if w.lower() in action_verbs)
+        found_action_verbs = list(set([w.lower() for w in words if w.lower() in action_verbs]))
+        action_verb_count = len(found_action_verbs)
         action_verb_ratio = action_verb_count / max(word_count, 1) * 100
         
         return {
@@ -305,7 +305,8 @@ class NLPEngine:
             'avg_sentence_length': round(avg_sentence_length, 2),
             'vocabulary_richness': round(ttr, 3),
             'action_verb_count': action_verb_count,
-            'action_verb_percentage': round(action_verb_ratio, 2)
+            'action_verb_percentage': round(action_verb_ratio, 2),
+            'found_action_verbs': sorted(found_action_verbs)
         }
     
     def get_skill_summary(self, text: str) -> Dict[str, any]:
