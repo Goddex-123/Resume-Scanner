@@ -12,10 +12,4 @@ from .job_matcher import JobMatcher
 __version__ = "1.0.0"
 __author__ = "Soham"
 
-__all__ = [
-    "ResumeParser",
-    "NLPEngine", 
-    "ATSScorer",
-    "AIDetector",
-    "JobMatcher"
-]
+__all__ = ["ResumeParser", "NLPEngine", "ATSScorer", "AIDetector", "JobMatcher"]

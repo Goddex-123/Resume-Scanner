@@ -29,12 +29,12 @@ It provides a detailed breakdown of missing keywords, formatting errors, and str
 
 ```mermaid
 graph TD
-    subgraph Input Layer
+    subgraph Input_Layer [Input Layer]
         Resume[Resume File] --> Parser[Text Parser]
         JD[Job Description] --> NLP[NLP Processor]
     end
 
-    subgraph Processing Layer
+    subgraph Processing_Layer [Processing Layer]
         Parser --> Clean[Text Cleaning]
         Clean --> Tokens[Tokenization]
         
@@ -45,7 +45,7 @@ graph TD
         Tokens --> NER[Entity Extraction (Spacy)]
     end
 
-    subgraph Output Layer
+    subgraph Output_Layer [Output Layer]
         Similarity --> Score[Match Score]
         NER --> Skills[Skills & Keywords]
         
@@ -121,4 +121,4 @@ make test
 **Soham Barate (Goddex-123)**
 *Senior AI Engineer & Data Scientist*
 
-[LinkedIn](https://linkedin.com/in/soham-barate-7429181a9) | [GitHub](https://github.com/goddex-123)
+[LinkedIn](https://linkedin.com/in/soham-barate-7429181a9) | [GitHub](https://github.com/Goddex-123)
