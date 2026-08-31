@@ -41,15 +41,15 @@ def _stat_bar(label: str, value: float, max_val: float = 100, color: str = "#8b5
     pct = min(value / max_val * 100, 100)
     st.markdown(
         f"""
-    <div class="stat-bar-container">
-        <div class="stat-bar-label">
-            <span>{label}</span>
-            <span style="color:{color}; font-family:'JetBrains Mono',monospace; font-weight:600;">{value:.0f}</span>
-        </div>
-        <div class="stat-bar-track">
-            <div class="stat-bar-fill" style="width:{pct}%; background:linear-gradient(90deg, {color}, {color}aa);"></div>
-        </div>
-    </div>
+<div class="stat-bar-container">
+<div class="stat-bar-label">
+<span>{label}</span>
+<span style="color:{color}; font-family:'JetBrains Mono',monospace; font-weight:600;">{value:.0f}</span>
+</div>
+<div class="stat-bar-track">
+<div class="stat-bar-fill" style="width:{pct}%; background:linear-gradient(90deg, {color}, {color}aa);"></div>
+</div>
+</div>
     """,
         unsafe_allow_html=True,
     )
@@ -144,11 +144,11 @@ def run_analysis(
         with col:
             st.markdown(
                 f"""
-            <div class="metric-card">
-                <span class="metric-icon">{icon}</span>
-                <div class="metric-value">{val}</div>
-                <div class="metric-label">{label}</div>
-            </div>
+<div class="metric-card">
+<span class="metric-icon">{icon}</span>
+<div class="metric-value">{val}</div>
+<div class="metric-label">{label}</div>
+</div>
             """,
                 unsafe_allow_html=True,
             )
@@ -163,9 +163,9 @@ def run_analysis(
     with qi1:
         st.markdown(
             """
-        <div class="analysis-card">
-            <div class="analysis-card-title">📇 Contact Information</div>
-            <div class="contact-grid">
+<div class="analysis-card">
+<div class="analysis-card-title">📇 Contact Information</div>
+<div class="contact-grid">
         """,
             unsafe_allow_html=True,
         )
@@ -180,21 +180,21 @@ def run_analysis(
         for ic, lbl, val in items:
             found_class = "" if val and val != "—" else 'style="opacity:0.4;"'
             html_items += f"""
-                <div class="contact-item" {found_class}>
-                    <span class="contact-icon">{ic}</span>
-                    <div>
-                        <div class="contact-label">{lbl}</div>
-                        <div class="contact-value">{val or '—'}</div>
-                    </div>
-                </div>
+<div class="contact-item" {found_class}>
+<span class="contact-icon">{ic}</span>
+<div>
+<div class="contact-label">{lbl}</div>
+<div class="contact-value">{val or '—'}</div>
+</div>
+</div>
             """
         st.markdown(html_items + "</div></div>", unsafe_allow_html=True)
 
     with qi2:
         st.markdown(
             """
-        <div class="analysis-card">
-            <div class="analysis-card-title">📑 Resume Sections</div>
+<div class="analysis-card">
+<div class="analysis-card-title">📑 Resume Sections</div>
         """,
             unsafe_allow_html=True,
         )
@@ -223,17 +223,17 @@ def run_analysis(
     with qi3:
         st.markdown(
             f"""
-        <div class="analysis-card">
-            <div class="analysis-card-title">⏱️ Experience</div>
-            <div style="text-align:center; margin:8px 0;">
-                <div style="font-size:2.2rem; font-weight:700; font-family:'JetBrains Mono',monospace;
+<div class="analysis-card">
+<div class="analysis-card-title">⏱️ Experience</div>
+<div style="text-align:center; margin:8px 0;">
+<div style="font-size:2.2rem; font-weight:700; font-family:'JetBrains Mono',monospace;
                     background:linear-gradient(135deg,#8b5cf6,#06b6d4);
                     -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
                     {exp_years}+
-                </div>
-                <div style="color:#94a3b8; font-size:0.82rem; text-transform:uppercase; letter-spacing:1px;">Years Estimated</div>
-            </div>
-            <div class="exp-timeline">
+</div>
+<div style="color:#94a3b8; font-size:0.82rem; text-transform:uppercase; letter-spacing:1px;">Years Estimated</div>
+</div>
+<div class="exp-timeline">
         """,
             unsafe_allow_html=True,
         )
@@ -243,10 +243,10 @@ def run_analysis(
                 end_label = "Present" if entry["end"] >= 2026 else str(entry["end"])
                 st.markdown(
                     f"""
-                    <div class="exp-item">
-                        <span class="exp-years">{entry['years']} yr{'s' if entry['years'] != 1 else ''}</span>
-                        <span class="exp-range"> — {entry['start']} → {end_label}</span>
-                    </div>
+<div class="exp-item">
+<span class="exp-years">{entry['years']} yr{'s' if entry['years'] != 1 else ''}</span>
+<span class="exp-range"> — {entry['start']} → {end_label}</span>
+</div>
                 """,
                     unsafe_allow_html=True,
                 )
@@ -308,10 +308,10 @@ def run_analysis(
 
                 st.markdown(
                     f"""
-                <div class="grade-box">
-                    <strong>Grade:</strong> {ats_results.get('grade', 'N/A')} &nbsp;&nbsp;|&nbsp;&nbsp;
-                    <strong>ATS Pass:</strong> {'✅ Likely' if ats_results.get('pass_ats') else '❌ Unlikely'}
-                </div>
+<div class="grade-box">
+<strong>Grade:</strong> {ats_results.get('grade', 'N/A')} &nbsp;&nbsp;|&nbsp;&nbsp;
+<strong>ATS Pass:</strong> {'✅ Likely' if ats_results.get('pass_ats') else '❌ Unlikely'}
+</div>
                 """,
                     unsafe_allow_html=True,
                 )
@@ -326,10 +326,10 @@ def run_analysis(
                     for i, sug in enumerate(suggestions, 1):
                         st.markdown(
                             f"""
-                        <div class="suggestion-item">
-                            <div class="suggestion-number">{i}</div>
-                            <div class="suggestion-text">{sug}</div>
-                        </div>
+<div class="suggestion-item">
+<div class="suggestion-number">{i}</div>
+<div class="suggestion-text">{sug}</div>
+</div>
                         """,
                             unsafe_allow_html=True,
                         )
@@ -422,13 +422,13 @@ def run_analysis(
 
                 st.markdown(
                     f"""
-                <div class="verdict-card">
-                    <h3 class="section-header" style="text-align:center;">🔍 Verdict</h3>
-                    <div style="font-size:1.6rem; color:{verdict_color}; font-weight:700; margin:12px 0;">
+<div class="verdict-card">
+<h3 class="section-header" style="text-align:center;">🔍 Verdict</h3>
+<div style="font-size:1.6rem; color:{verdict_color}; font-weight:700; margin:12px 0;">
                         {verdict}
-                    </div>
-                    <div style="color:#94a3b8;">Confidence: <strong>{confidence}</strong></div>
-                </div>
+</div>
+<div style="color:#94a3b8;">Confidence: <strong>{confidence}</strong></div>
+</div>
                 """,
                     unsafe_allow_html=True,
                 )
@@ -475,15 +475,15 @@ def run_analysis(
                     match_color = "#10b981" if best["match"] >= 70 else "#f59e0b"
                     st.markdown(
                         f"""
-                    <div class="best-match-card">
-                        <div style="font-size:0.95rem; color:#94a3b8;">Best Match</div>
-                        <div style="font-size:2rem; font-weight:700; color:{match_color};">
+<div class="best-match-card">
+<div style="font-size:0.95rem; color:#94a3b8;">Best Match</div>
+<div style="font-size:2rem; font-weight:700; color:{match_color};">
                             {best['role']}
-                        </div>
-                        <div style="font-size:1.4rem; color:#8b5cf6; font-family:'JetBrains Mono',monospace;">
+</div>
+<div style="font-size:1.4rem; color:#8b5cf6; font-family:'JetBrains Mono',monospace;">
                             {best['match']:.1f}% Match
-                        </div>
-                    </div>
+</div>
+</div>
                     """,
                         unsafe_allow_html=True,
                     )
@@ -498,10 +498,10 @@ def run_analysis(
                     for i, rec in enumerate(recs, 1):
                         st.markdown(
                             f"""
-                        <div class="suggestion-item">
-                            <div class="suggestion-number">{i}</div>
-                            <div class="suggestion-text">{rec}</div>
-                        </div>
+<div class="suggestion-item">
+<div class="suggestion-number">{i}</div>
+<div class="suggestion-text">{rec}</div>
+</div>
                         """,
                             unsafe_allow_html=True,
                         )
@@ -525,8 +525,8 @@ def run_analysis(
             # Raw stats
             st.markdown(
                 """
-            <div class="analysis-card">
-                <div class="analysis-card-title">📊 Document Statistics</div>
+<div class="analysis-card">
+<div class="analysis-card-title">📊 Document Statistics</div>
             """,
                 unsafe_allow_html=True,
             )
@@ -563,8 +563,8 @@ def run_analysis(
             # Formatting & Structure Checks
             st.markdown(
                 """
-            <div class="analysis-card" style="margin-top:16px;">
-                <div class="analysis-card-title">📐 Formatting & Structure</div>
+<div class="analysis-card" style="margin-top:16px;">
+<div class="analysis-card-title">📐 Formatting & Structure</div>
             """,
                 unsafe_allow_html=True,
             )
@@ -602,15 +602,15 @@ def run_analysis(
 
             st.markdown(
                 f"""
-            <div style="display:flex; align-items:center; margin-bottom:10px;">
-                <span style="font-size:1.2rem; margin-right:10px;">{wc_icon}</span>
-                <span style="color:{wc_color}; font-weight:500;">{wc_text}</span>
-            </div>
-            <div style="display:flex; align-items:center;">
-                <span style="font-size:1.2rem; margin-right:10px;">{bp_icon}</span>
-                <span style="color:{bp_color}; font-weight:500;">{bp_text}</span>
-            </div>
-            </div>
+<div style="display:flex; align-items:center; margin-bottom:10px;">
+<span style="font-size:1.2rem; margin-right:10px;">{wc_icon}</span>
+<span style="color:{wc_color}; font-weight:500;">{wc_text}</span>
+</div>
+<div style="display:flex; align-items:center;">
+<span style="font-size:1.2rem; margin-right:10px;">{bp_icon}</span>
+<span style="color:{bp_color}; font-weight:500;">{bp_text}</span>
+</div>
+</div>
             """,
                 unsafe_allow_html=True,
             )
@@ -668,8 +668,8 @@ def run_analysis(
             # Vocabulary Richness
             st.markdown(
                 """
-            <div class="analysis-card" style="margin-top:16px;">
-                <div class="analysis-card-title">📖 Vocabulary Analysis</div>
+<div class="analysis-card" style="margin-top:16px;">
+<div class="analysis-card-title">📖 Vocabulary Analysis</div>
             """,
                 unsafe_allow_html=True,
             )
@@ -714,12 +714,12 @@ def main():
     # ── Hero Section ──────────────────────────────────────────────────────
     st.markdown(
         """
-    <div class="hero-container">
-        <div class="hero-icon">🔬</div>
-        <h1 class="hero-title">Resume Scanner</h1>
-        <p class="hero-subtitle">AI-Powered Analysis • ATS Scoring • Skill Extraction</p>
-        <div class="hero-badge">✦ v2.0 — Premium Edition</div>
-    </div>
+<div class="hero-container">
+<div class="hero-icon">🔬</div>
+<h1 class="hero-title">Resume Scanner</h1>
+<p class="hero-subtitle">AI-Powered Analysis • ATS Scoring • Skill Extraction</p>
+<div class="hero-badge">✦ v2.0 — Premium Edition</div>
+</div>
     """,
         unsafe_allow_html=True,
     )
@@ -758,12 +758,12 @@ def main():
         )
         st.markdown(
             """
-        <div>
-            <span class="sidebar-tech-badge">NLP</span>
-            <span class="sidebar-tech-badge">TF-IDF</span>
-            <span class="sidebar-tech-badge">ML</span>
-            <span class="sidebar-tech-badge">Heuristics</span>
-        </div>
+<div>
+<span class="sidebar-tech-badge">NLP</span>
+<span class="sidebar-tech-badge">TF-IDF</span>
+<span class="sidebar-tech-badge">ML</span>
+<span class="sidebar-tech-badge">Heuristics</span>
+</div>
         """,
             unsafe_allow_html=True,
         )
@@ -771,10 +771,10 @@ def main():
         st.markdown('<div class="styled-divider"></div>', unsafe_allow_html=True)
         st.markdown(
             """
-        <div style="text-align:center; padding:8px 0;">
-            <span class="pulse"></span>
-            <span style="color:#94a3b8; font-size:0.78rem;">System Online</span>
-        </div>
+<div style="text-align:center; padding:8px 0;">
+<span class="pulse"></span>
+<span style="color:#94a3b8; font-size:0.78rem;">System Online</span>
+</div>
         """,
             unsafe_allow_html=True,
         )
@@ -782,12 +782,12 @@ def main():
     # ── Upload Section ────────────────────────────────────────────────────
     st.markdown(
         """
-    <div class="upload-section">
-        <div class="upload-section-inner">
-            <div class="upload-title">📄 Upload Your Resume</div>
-            <div class="upload-hint">Supports PDF and DOCX • Up to 1 GB</div>
-        </div>
-    </div>
+<div class="upload-section">
+<div class="upload-section-inner">
+<div class="upload-title">📄 Upload Your Resume</div>
+<div class="upload-hint">Supports PDF and DOCX • Up to 1 GB</div>
+</div>
+</div>
     """,
         unsafe_allow_html=True,
     )
@@ -844,9 +844,9 @@ def main():
     # ── Footer ────────────────────────────────────────────────────────────
     st.markdown(
         """
-    <div class="app-footer">
-        <p>RESUME SCANNER v2.0 — Built with ❤️ by Soham</p>
-    </div>
+<div class="app-footer">
+<p>RESUME SCANNER v2.0 — Built with ❤️ by Soham</p>
+</div>
     """,
         unsafe_allow_html=True,
     )
