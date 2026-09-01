@@ -1,0 +1,62 @@
+ALEX RIVERA
+Lead Cybersecurity Analyst | Penetration Testing & Threat Intelligence Specialist
+Email: alex.rivera@cybersecmail.com | Phone: (555) 432-8765
+LinkedIn: linkedin.com/in/alexrivera-sec | GitHub: github.com/alexrivera-cyber
+Portfolio: alexrivera-security.io
+
+SUMMARY
+Results-driven Lead Cybersecurity Analyst and Penetration Tester with 6+ years of experience safeguarding enterprise infrastructures, orchestrating incident responses, and executing rigorous penetration tests. Proven track record of reducing vulnerability remediation time by 55% and fortifying cloud and on-premise perimeters against zero-day exploits. Deep expertise in SIEM monitoring, threat hunting, zero-trust architectures, and OWASP compliance. Certified CISSP and CEH with a commitment to proactive defense and security automation.
+
+EXPERIENCE
+
+Lead SOC Analyst & Incident Responder | CyberShield Defense Labs
+January 2023 - Present
+- Architected and managed enterprise SIEM operations utilizing Splunk and Elastic Security, analyzing 10M+ daily events across 4,500 endpoints
+- Commanded incident response protocols for 40+ high-severity security incidents, reducing mean time to detect (MTTD) by 60% and mean time to respond (MTTR) from 4 hours to 45 minutes
+- Developed automated Python and Bash playbooks for threat hunting and alert triage, saving 25+ analyst hours weekly
+- Implemented zero trust network architecture and multi-factor authentication policies across hybrid AWS and on-premise environments
+- Conducted regular vulnerability assessments with Nessus and Qualys, collaborating with DevOps to remediate 200+ critical CVEs
+- Authored comprehensive post-incident root cause analysis reports presented to C-suite executives and compliance auditors
+
+Senior Penetration Tester | SecureNet Solutions
+March 2021 - December 2022
+- Conducted 35+ full-scope penetration tests targeting web applications, internal networks, and cloud infrastructures
+- Identified and exploited critical vulnerabilities in accordance with OWASP Top 10, including SQL injection, cross-site scripting (XSS), and remote code execution (RCE)
+- Utilized tools including Burp Suite Pro, Metasploit, Nmap, Wireshark, and Kali Linux to simulate advanced persistent threat (APT) attack vectors
+- Performed wireless network audits and social engineering simulations, increasing overall corporate security awareness scores by 40%
+- Delivered detailed technical remediation roadmaps and executive briefings for enterprise clients across healthcare and fintech sectors
+
+Cybersecurity Specialist | Apex Information Systems
+June 2018 - February 2021
+- Configured and monitored next-generation firewalls (Palo Alto Networks, Fortinet) and intrusion detection/prevention systems (Snort, Suricata)
+- Performed packet analysis and network traffic inspection using Wireshark to investigate anomalous network behavior
+- Maintained Active Directory security controls, role-based access control (RBAC), and privileged access management (PAM)
+- Ensured continuous compliance with industry regulatory standards including ISO 27001, SOC 2 Type II, and NIST Cybersecurity Framework (CSF)
+- Conducted employee security training programs covering phishing defense, password hygiene, and data loss prevention
+
+EDUCATION
+
+Bachelor of Science in Cybersecurity & Information Assurance
+Purdue University | 2018
+GPA: 3.8/4.0 | Magna Cum Laude
+
+TECHNICAL SKILLS
+
+Security Tools: Splunk, Wireshark, Metasploit, Burp Suite, Nmap, Nessus, Snort, Suricata, Kali Linux, CrowdStrike Falcon, Qualys, OWASP ZAP
+Core Disciplines: Penetration Testing, Incident Response, SIEM, Threat Hunting, Vulnerability Assessment, Zero Trust, Cryptography, Network Security, Malware Analysis
+Scripting & Programming: Python, Bash, Shell, PowerShell, SQL, Go
+Cloud & Infrastructure: AWS Security (GuardDuty, IAM, CloudTrail, KMS), Linux, Windows Server, Docker, Kubernetes
+Networking & Protocols: TCP/IP, DNS, VPN, Firewalls, IDS/IPS, TLS/SSL, Proxy Servers
+Compliance & Frameworks: NIST CSF, MITRE ATT&CK, ISO 27001, SOC 2, HIPAA, PCI-DSS
+
+CERTIFICATIONS
+
+- CISSP - Certified Information Systems Security Professional (ISC2) - 2023
+- CEH - Certified Ethical Hacker (EC-Council) - 2021
+- CompTIA Security+ (CompTIA) - 2019
+- AWS Certified Security - Specialty - 2022
+
+KEY PROJECTS
+
+- Automated Cloud Threat Detection Pipeline: Built serverless Python framework on AWS Lambda and Splunk to identify unauthorized IAM role assumptions within 30 seconds.
+- Enterprise Ransomware Defense Playbook: Developed automated network isolation scripts and disaster recovery drills tested across 500 virtual servers.

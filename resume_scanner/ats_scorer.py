@@ -1,19 +1,24 @@
 """
-ATS Scorer Module
-Calculates ATS (Applicant Tracking System) compatibility scores.
+ATS Scorer Module - Production-Grade Edition
+Calculates explainable ATS (Applicant Tracking System) compatibility scores
+based on measurable formatting, section completeness, keyword alignment,
+quantifiable achievements, and contact completeness.
 """
 
 import re
-from typing import Dict, List, Tuple, Optional
-from collections import Counter
+from typing import Dict, List, Optional, Any
+
+from .config import ATSScoringConfig, DEFAULT_ATS_CONFIG
+from .nlp_engine import NLPEngine
 
 
 class ATSScorer:
     """
-    Analyzes resume for ATS compatibility and provides scoring.
+    Analyzes resumes for ATS parseability, structure, and keyword relevance.
+    Provides explainable scoring and ethical improvement recommendations.
     """
 
-    # Critical sections that ATS systems look for
+    # Critical sections that ATS systems parse
     REQUIRED_SECTIONS = {
         "contact": ["email", "phone", "linkedin", "address", "contact"],
         "experience": [
@@ -164,58 +169,128 @@ class ATSScorer:
             "message queues",
             "security",
         ],
+        "cybersecurity_analyst": [
+            "cybersecurity",
+            "network security",
+            "penetration testing",
+            "ethical hacking",
+            "siem",
+            "splunk",
+            "wireshark",
+            "metasploit",
+            "burp suite",
+            "firewall",
+            "incident response",
+            "vulnerability assessment",
+            "cryptography",
+            "owasp",
+            "linux",
+            "python",
+            "bash",
+            "zero trust",
+            "threat intelligence",
+            "soc",
+            "cissp",
+            "compliance",
+        ],
+        "cybersecurity": [
+            "cybersecurity",
+            "network security",
+            "penetration testing",
+            "ethical hacking",
+            "siem",
+            "splunk",
+            "wireshark",
+            "metasploit",
+            "burp suite",
+            "firewall",
+            "incident response",
+            "vulnerability assessment",
+            "cryptography",
+            "owasp",
+            "linux",
+            "python",
+            "bash",
+            "zero trust",
+            "threat intelligence",
+            "soc",
+            "cissp",
+            "compliance",
+        ],
+        "web_developer": [
+            "javascript",
+            "typescript",
+            "html",
+            "css",
+            "react",
+            "next.js",
+            "node.js",
+            "express",
+            "rest",
+            "api",
+            "graphql",
+            "tailwind",
+            "git",
+            "responsive design",
+            "webpack",
+            "frontend",
+            "backend",
+            "sql",
+            "mongodb",
+            "ui/ux",
+        ],
     }
 
-    def __init__(self):
-        self.scores = {}
-        self.feedback = []
+    def __init__(self, config: Optional[ATSScoringConfig] = None):
+        self.config = config or DEFAULT_ATS_CONFIG
+        self.scores: Dict[str, float] = {}
+        self.feedback: List[str] = []
+        self.stuffing_warnings: List[str] = []
+        self.nlp = NLPEngine(use_spacy=False)
 
-    def calculate_score(self, text: str, target_role: Optional[str] = None) -> Dict:
+    def calculate_score(self, text: str, target_role: Optional[str] = None) -> Dict[str, Any]:
         """
-        Calculate comprehensive ATS score.
-
-        Args:
-            text: Resume text content
-            target_role: Target job role for keyword matching
-
-        Returns:
-            Dictionary with scores and detailed feedback
+        Calculate comprehensive ATS score with explainable breakdown.
         """
         self.feedback = []
+        self.stuffing_warnings = []
         text_lower = text.lower()
 
-        # Calculate individual scores
+        # Calculate individual category scores
         section_score = self._score_sections(text_lower)
         format_score = self._score_formatting(text)
         keyword_score = self._score_keywords(text_lower, target_role)
+        achievements_score = self._score_achievements(text)
         length_score = self._score_length(text)
         readability_score = self._score_readability(text)
         contact_score = self._score_contact_info(text)
 
-        # Weight the scores
-        weights = {
-            "sections": 0.20,
-            "formatting": 0.15,
-            "keywords": 0.25,
-            "length": 0.10,
-            "readability": 0.15,
-            "contact": 0.15,
-        }
+        weights = self.config.weights
+        w_sections = weights.get("sections", 0.20)
+        w_formatting = weights.get("formatting", 0.15)
+        w_keywords = weights.get("keywords", 0.25)
+        w_achievements = weights.get("achievements", 0.15)
+        w_readability = weights.get("readability", 0.10)
+        w_contact = weights.get("contact", 0.15)
 
-        total_score = (
-            section_score * weights["sections"]
-            + format_score * weights["formatting"]
-            + keyword_score * weights["keywords"]
-            + length_score * weights["length"]
-            + readability_score * weights["readability"]
-            + contact_score * weights["contact"]
-        )
+        total_weight = w_sections + w_formatting + w_keywords + w_achievements + w_readability + w_contact
+        raw_total = (
+            section_score * w_sections
+            + format_score * w_formatting
+            + keyword_score * w_keywords
+            + achievements_score * w_achievements
+            + readability_score * w_readability
+            + contact_score * w_contact
+        ) / max(total_weight, 0.01)
+
+        total_score = max(0.0, min(100.0, raw_total))
 
         self.scores = {
             "total": round(total_score, 1),
             "sections": round(section_score, 1),
             "formatting": round(format_score, 1),
             "keywords": round(keyword_score, 1),
+            "achievements": round(achievements_score, 1),
             "length": round(length_score, 1),
             "readability": round(readability_score, 1),
             "contact": round(contact_score, 1),
@@ -225,15 +300,19 @@ class ATSScorer:
             "scores": self.scores,
             "feedback": self.feedback,
             "grade": self._get_grade(total_score),
-            "pass_ats": total_score >= 60,
+            "pass_ats": total_score >= self.config.pass_threshold,
+            "stuffing_warnings": self.stuffing_warnings,
+            "disclaimer": (
+                "Analytical estimate based on ATS formatting and keyword alignment heuristics. "
+                "Real employer ATS systems vary."
+            ),
         }
 
     def _score_sections(self, text: str) -> float:
         """Score based on presence of required and optional sections."""
-        score = 0
-        max_score = 100
+        score = 0.0
+        max_score = 100.0
 
-        # Required sections (60 points total)
         required_found = 0
         for section, keywords in self.REQUIRED_SECTIONS.items():
             found = any(kw in text for kw in keywords)
@@ -242,200 +321,222 @@ class ATSScorer:
             else:
                 self.feedback.append(f"⚠️ Missing required section: {section.title()}")
 
-        score += (required_found / len(self.REQUIRED_SECTIONS)) * 60
+        score += (required_found / len(self.REQUIRED_SECTIONS)) * 60.0
 
-        # Optional sections (40 points total)
         optional_found = 0
         for section, keywords in self.OPTIONAL_SECTIONS.items():
             found = any(kw in text for kw in keywords)
             if found:
                 optional_found += 1
 
-        score += (optional_found / len(self.OPTIONAL_SECTIONS)) * 40
+        score += (optional_found / len(self.OPTIONAL_SECTIONS)) * 40.0
 
         if required_found == len(self.REQUIRED_SECTIONS):
-            self.feedback.append("✅ All required sections present")
+            self.feedback.append("✅ All essential resume sections present")
 
         return min(score, max_score)
 
     def _score_formatting(self, text: str) -> float:
-        """Score based on formatting quality."""
-        score = 100
-
-        # Check for problematic formatting
+        """Score based on formatting hygiene for ATS parsers."""
+        score = 100.0
         issues = []
 
-        # Too many special characters
+        # Excessive special characters
         special_chars = len(re.findall(r"[^\w\s\.\,\;\:\-\+\@\#\(\)\/\&]", text))
-        if special_chars > 50:
-            score -= 15
-            issues.append("Too many special characters")
+        if special_chars > 60:
+            score -= 15.0
+            issues.append("High density of non-standard symbols may confuse legacy parsers")
 
-        # Check for consistent use of bullet points
+        # Bullet point consistency
         bullet_patterns = [r"•", r"○", r"■", r"►", r"\*", r"-"]
         bullet_types = sum(1 for p in bullet_patterns if re.search(p, text))
         if bullet_types > 3:
-            score -= 10
-            issues.append("Inconsistent bullet point styles")
+            score -= 10.0
+            issues.append("Multiple conflicting bullet point symbols detected")
 
-        # Check for all caps abuse
+        # Excessive all-caps words
         all_caps_words = len(re.findall(r"\b[A-Z]{5,}\b", text))
-        if all_caps_words > 10:
-            score -= 10
-            issues.append("Excessive use of ALL CAPS")
+        if all_caps_words > 12:
+            score -= 10.0
+            issues.append("Excessive use of ALL CAPS text")
 
-        # Check for tables/graphics indicators (ATS struggle with these)
+        # Table-like ASCII markers
         if re.search(r"\|.*\|.*\|", text):
-            score -= 15
-            issues.append("Table-like formatting detected (may confuse ATS)")
+            score -= 10.0
+            issues.append("Table-like formatting detected (some ATS parsers struggle to read table flow)")
 
         if not issues:
-            self.feedback.append("✅ Good formatting for ATS compatibility")
+            self.feedback.append("✅ Clean formatting compatible with standard ATS parsers")
         else:
             for issue in issues:
                 self.feedback.append(f"⚠️ {issue}")
 
-        return max(score, 0)
+        return max(score, 0.0)
 
     def _score_keywords(self, text: str, target_role: Optional[str] = None) -> float:
-        """Score based on relevant keyword density."""
+        """Score keyword relevance with keyword stuffing detection and diminishing returns."""
         if not target_role:
-            # Auto-detect role
             target_role = self._detect_role(text)
 
         target_role = target_role.lower().replace(" ", "_").replace("-", "_")
-
         if target_role not in self.ROLE_KEYWORDS:
-            # Default to data scientist if role not found
             target_role = "data_scientist"
 
         keywords = self.ROLE_KEYWORDS[target_role]
+        words = text.split()
+        total_words = max(len(words), 1)
+
         found_keywords = []
         missing_keywords = []
 
+        # Count keyword occurrences to detect stuffing
+        stuffing_found = False
         for keyword in keywords:
-            if keyword.lower() in text:
+            kw_pattern = rf"\b{re.escape(keyword.lower())}\b"
+            matches = len(re.findall(kw_pattern, text))
+            if matches > 0:
                 found_keywords.append(keyword)
+                ratio = matches / total_words
+                if matches >= self.config.keyword_stuffing_count_threshold and ratio >= self.config.keyword_stuffing_ratio_threshold:
+                    stuffing_found = True
+                    warn_msg = f"Keyword '{keyword}' appears {matches} times ({ratio*100:.1f}% of text). Repeated keywords offer diminishing ATS returns."
+                    self.stuffing_warnings.append(warn_msg)
             else:
                 missing_keywords.append(keyword)
 
-        score = (len(found_keywords) / len(keywords)) * 100
+        # Baseline coverage of unique role keywords (no points for repeating the same word)
+        unique_coverage = (len(found_keywords) / len(keywords)) * 100.0
 
-        if found_keywords:
+        # Apply stuffing penalty if detected
+        if stuffing_found:
+            unique_coverage = max(30.0, unique_coverage - 15.0)
+            self.feedback.append("⚠️ Keyword repetition detected. Natural phrasing is preferred by recruiters and modern ATS.")
+        else:
+            if found_keywords:
+                self.feedback.append(f"✅ Found {len(found_keywords)}/{len(keywords)} role-relevant keywords")
+
+        # Ethical phrasing following Rule 17
+        if missing_keywords[:4]:
+            top_missing = ", ".join([k.title() for k in missing_keywords[:4]])
             self.feedback.append(
-                f"✅ Found {len(found_keywords)}/{len(keywords)} role-relevant keywords"
+                f"💡 If you genuinely have experience with {top_missing}, consider highlighting them in your experience bullets."
             )
 
-        if missing_keywords[:5]:  # Show top 5 missing
-            self.feedback.append(
-                f"💡 Consider adding keywords: {', '.join(missing_keywords[:5])}"
-            )
+        return min(unique_coverage, 100.0)
+
+    def _score_achievements(self, text: str) -> float:
+        """Score based on quantifiable achievements and metrics in experience bullets."""
+        analysis = self.nlp.analyze_bullet_points(text)
+        total_bullets = analysis.get("total_bullets", 0)
+        metric_pct = analysis.get("metric_percentage", 0.0)
+
+        if total_bullets == 0:
+            score = 60.0
+            self.feedback.append("💡 Consider structuring work history with clear bullet points.")
+        elif metric_pct >= 50.0:
+            score = 100.0
+            self.feedback.append(f"✅ Strong achievement metrics ({metric_pct:.0f}% of bullets contain measurable outcomes)")
+        elif metric_pct >= 30.0:
+            score = 80.0
+            self.feedback.append(f"✅ Good presence of measurable metrics ({metric_pct:.0f}% of bullets)")
+        elif metric_pct >= 15.0:
+            score = 65.0
+            self.feedback.append("💡 If available, consider adding measurable outcomes (e.g. scale, % gains, time saved) to more bullets.")
+        else:
+            score = 50.0
+            self.feedback.append("💡 Most bullets lack quantifiable outcomes. Where possible, show measurable impact.")
 
         return score
 
     def _score_length(self, text: str) -> float:
-        """Score based on resume length."""
+        """Score based on resume word count."""
         word_count = len(text.split())
+        min_opt = self.config.optimal_word_count_min
+        max_opt = self.config.optimal_word_count_max
 
-        # Optimal range: 400-800 words (1-2 pages)
-        if 400 <= word_count <= 800:
-            score = 100
-            self.feedback.append("✅ Resume length is optimal")
-        elif 300 <= word_count < 400 or 800 < word_count <= 1000:
-            score = 80
+        if min_opt <= word_count <= max_opt:
+            score = 100.0
+            self.feedback.append("✅ Resume length is optimal (1-2 pages)")
+        elif (min_opt - 100) <= word_count < min_opt or max_opt < word_count <= (max_opt + 200):
+            score = 80.0
             self.feedback.append("⚠️ Resume length is acceptable but could be adjusted")
-        elif 200 <= word_count < 300:
-            score = 60
-            self.feedback.append("⚠️ Resume might be too short - add more details")
-        elif word_count > 1000:
-            score = 60
-            self.feedback.append("⚠️ Resume might be too long - consider condensing")
+        elif word_count < (min_opt - 100):
+            score = 60.0
+            self.feedback.append("⚠️ Resume may be too brief — provide more depth on key projects")
         else:
-            score = 40
-            self.feedback.append("❌ Resume length is problematic")
+            score = 65.0
+            self.feedback.append("⚠️ Resume is quite long — consider condensing older roles")
 
         return score
 
     def _score_readability(self, text: str) -> float:
-        """Score based on text readability."""
-        score = 100
-
+        """Score based on sentence length and active voice."""
+        score = 100.0
         words = text.split()
-        sentences = re.split(r"[.!?]+", text)
-        sentences = [s.strip() for s in sentences if s.strip()]
+        sentences = [s.strip() for s in re.split(r"[.!?]+", text) if s.strip()]
 
         if not sentences:
-            return 50
+            return 60.0
 
-        avg_sentence_length = len(words) / len(sentences)
+        avg_len = len(words) / len(sentences)
+        if avg_len > 28:
+            score -= 15.0
+            self.feedback.append("⚠️ Sentences are somewhat long — consider breaking them into concise bullets")
+        elif avg_len < 8:
+            score -= 10.0
 
-        # Optimal sentence length: 15-25 words
-        if avg_sentence_length > 30:
-            score -= 20
-            self.feedback.append("⚠️ Sentences are too long - break them up")
-        elif avg_sentence_length < 10:
-            score -= 10
-            self.feedback.append("⚠️ Sentences might be too short")
-
-        # Check for passive voice indicators
-        passive_indicators = ["was", "were", "been", "being", "is", "are"]
+        # Passive voice check
+        passive_indicators = {"was", "were", "been", "being", "is", "are"}
         passive_count = sum(1 for w in words if w.lower() in passive_indicators)
-        passive_ratio = passive_count / max(len(words), 1)
+        if (passive_count / max(len(words), 1)) > 0.07:
+            score -= 10.0
+            self.feedback.append("💡 Active voice: Begin bullets with strong action verbs rather than passive constructions")
 
-        if passive_ratio > 0.05:
-            score -= 10
-            self.feedback.append("💡 Consider using more active voice")
-
-        return max(score, 0)
+        return max(score, 0.0)
 
     def _score_contact_info(self, text: str) -> float:
-        """Score based on contact information completeness."""
-        score = 0
+        """Score based on contact details completeness."""
+        score = 0.0
 
         # Email
-        if re.search(r"[\w\.-]+@[\w\.-]+\.\w+", text):
-            score += 30
+        if re.search(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b", text):
+            score += 30.0
         else:
             self.feedback.append("❌ No email address found")
 
         # Phone
-        if re.search(
-            r"[\+]?[(]?[0-9]{1,3}[)]?[-\s\.]?[0-9]{3,4}[-\s\.]?[0-9]{4,6}", text
-        ):
-            score += 25
+        if re.search(r"(?:\+?\d{1,3}[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b", text):
+            score += 25.0
         else:
             self.feedback.append("⚠️ No phone number found")
 
         # LinkedIn
-        if re.search(r"linkedin", text, re.IGNORECASE):
-            score += 25
+        if re.search(r"linkedin\.com/in/", text, re.IGNORECASE) or "linkedin" in text.lower():
+            score += 25.0
         else:
-            self.feedback.append("💡 Consider adding LinkedIn profile")
+            self.feedback.append("💡 Consider adding a LinkedIn profile link")
 
-        # GitHub/Portfolio (bonus for tech roles)
-        if re.search(r"github|portfolio|website", text, re.IGNORECASE):
-            score += 20
+        # GitHub or Portfolio
+        if re.search(r"github|portfolio|website|\.dev|\.io", text, re.IGNORECASE):
+            score += 20.0
         else:
-            self.feedback.append("💡 Consider adding GitHub or portfolio link")
+            self.feedback.append("💡 Consider adding a GitHub, portfolio, or personal website link")
 
-        return min(score, 100)
+        return min(score, 100.0)
 
     def _detect_role(self, text: str) -> str:
         """Auto-detect the target role from resume content."""
         role_scores = {}
-
         for role, keywords in self.ROLE_KEYWORDS.items():
-            matches = sum(1 for kw in keywords if kw.lower() in text)
+            matches = sum(1 for kw in keywords if re.search(rf"\b{re.escape(kw.lower())}\b", text))
             role_scores[role] = matches
 
         if role_scores:
-            detected = max(role_scores, key=role_scores.get)
-            return detected
-
+            return max(role_scores, key=role_scores.get)
         return "software_engineer"
 
     def _get_grade(self, score: float) -> str:
-        """Convert score to letter grade."""
+        """Convert numerical score to letter grade."""
         if score >= 90:
             return "A+"
         elif score >= 85:
@@ -456,34 +557,31 @@ class ATSScorer:
             return "C-"
         elif score >= 45:
             return "D"
-        else:
-            return "F"
+        return "F"
 
     def get_improvement_suggestions(self) -> List[str]:
-        """Get prioritized list of improvements."""
+        """Get prioritized list of improvement recommendations."""
         suggestions = []
 
-        if self.scores.get("contact", 0) < 70:
+        if self.scores.get("contact", 0) < 75:
             suggestions.append(
-                "Add complete contact information (email, phone, LinkedIn)"
+                "High Priority: Ensure your contact header has an email, phone number, and LinkedIn URL."
             )
-
-        if self.scores.get("sections", 0) < 70:
+        if self.scores.get("sections", 0) < 75:
             suggestions.append(
-                "Include all required sections: Experience, Education, Skills"
+                "High Priority: Include all core resume sections: Work Experience, Education, and Skills."
             )
-
-        if self.scores.get("keywords", 0) < 60:
-            suggestions.append("Add more role-relevant keywords and technical skills")
-
-        if self.scores.get("formatting", 0) < 70:
+        if self.scores.get("achievements", 0) < 70:
             suggestions.append(
-                "Simplify formatting - avoid tables, graphics, and special characters"
+                "Medium Priority: Quantify bullet points where possible with measurable outcomes (% increase, time saved, scale)."
             )
-
-        if self.scores.get("readability", 0) < 70:
+        if self.scores.get("keywords", 0) < 65:
             suggestions.append(
-                "Improve readability - use shorter sentences and active voice"
+                "Medium Priority: If you have experience with industry-standard tools in your field, consider explicitly mentioning them."
+            )
+        if self.scores.get("formatting", 0) < 75:
+            suggestions.append(
+                "Low Priority: Keep formatting simple with standard bullet symbols and clean text hierarchies."
             )
 
         return suggestions

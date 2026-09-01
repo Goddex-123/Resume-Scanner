@@ -1,0 +1,61 @@
+DAVID KIM
+Senior Full-Stack Web Developer | React, Next.js & Node.js Specialist
+Email: david.kim@webdevmail.com | Phone: (415) 555-0198
+LinkedIn: linkedin.com/in/davidkim-webdev | GitHub: github.com/davidkim-dev
+Portfolio: davidkim.dev
+
+SUMMARY
+Innovative Senior Full-Stack Web Developer with 5+ years of experience engineering high-performance web applications, scalable cloud microservices, and intuitive user interfaces. Expert in modern JavaScript and TypeScript ecosystems, specializing in React, Next.js, Node.js, and GraphQL. Track record of boosting web vital performance scores by 45%, reducing bundle sizes by 30%, and deploying distributed backend services handling millions of monthly page views. Dedicated to clean architecture, accessibility (WCAG 2.1), and automated testing.
+
+EXPERIENCE
+
+Senior Full-Stack Engineer | CloudScale Web Systems
+January 2023 - Present
+- Architected and shipped a multi-tenant SaaS analytics platform using Next.js, TypeScript, Node.js, and PostgreSQL, serving 350,000+ monthly active users
+- Re-engineered legacy frontend state management using Zustand and TanStack Query, decreasing page load times from 3.8s to 1.1s and improving Lighthouse score to 98/100
+- Implemented robust GraphQL and REST APIs with Node.js, NestJS, and Redis caching, sustaining 2,500+ requests per second with 99.98% uptime
+- Established automated CI/CD deployment pipelines using GitHub Actions, Docker, and AWS ECS, reducing deployment cycle times from 2 days to 15 minutes
+- Mentored a cross-functional squad of 6 frontend and backend developers, instituting code review standards, ESLint configs, and unit testing guidelines
+- Integrated Stripe billing, webhooks, and subscription lifecycle management generating $2.8M in ARR
+
+Full-Stack Web Developer | Nexus Digital Labs
+June 2020 - December 2022
+- Developed responsive, mobile-first e-commerce web applications utilizing React, Express, MongoDB, and Tailwind CSS
+- Created custom reusable component libraries conforming to WCAG 2.1 AA accessibility guidelines and design system specifications
+- Implemented real-time bidirectional communication with WebSockets and Socket.io for live chat and collaborative shopping carts
+- Optimized database query performance on MongoDB and PostgreSQL indexes, slashing p99 latency by 50%
+- Wrote end-to-end and integration test suites using Jest, React Testing Library, and Cypress, raising code coverage from 45% to 88%
+- Collaborated closely with UI/UX designers in Figma to translate wireframes into pixel-perfect responsive layouts
+
+Junior Frontend Developer | PixelCraft Media
+August 2018 - May 2020
+- Built interactive client websites and marketing landing pages using HTML5, CSS3, JavaScript (ES6+), and Vue.js
+- Implemented CSS animations, flexbox, and grid layouts optimized across mobile, tablet, and desktop viewports
+- Integrated third-party RESTful APIs, Google Analytics, and headless CMS platforms (Contentful, Strapi)
+- Diagnosed and resolved cross-browser compatibility issues across Chrome, Safari, Firefox, and Edge
+
+EDUCATION
+
+Bachelor of Science in Computer Science
+University of Washington | 2018
+GPA: 3.75/4.0
+
+TECHNICAL SKILLS
+
+Frontend Development: JavaScript, TypeScript, React, Next.js, Vue, Redux, Zustand, HTML5, CSS3, Tailwind CSS, Sass, Material UI, Webpack, Vite
+Backend Development: Node.js, Express, NestJS, REST APIs, GraphQL, Microservices, Python, Fastify
+Databases & ORM: PostgreSQL, MongoDB, Redis, MySQL, Prisma, Sequelize, Mongoose
+Cloud & DevOps: AWS (S3, EC2, CloudFront, Lambda), Docker, GitHub Actions, CI/CD, Vercel, Netlify, Linux, Nginx
+Testing & Tooling: Jest, React Testing Library, Cypress, Playwright, Git, npm, yarn, pnpm, Postman, Figma
+Methodologies: Agile, Scrum, Responsive Design, Web Accessibility (a11y), SEO Optimization, Performance Tuning
+
+CERTIFICATIONS
+
+- AWS Certified Developer - Associate (Amazon Web Services) - 2023
+- Meta Frontend Developer Professional Certificate (Meta) - 2022
+- Full-Stack Web Development Specialization - 2020
+
+KEY PROJECTS
+
+- Real-Time Team Collaboration Canvas: Built browser-based collaborative canvas using Next.js, WebSockets, HTML5 Canvas, and Redis Pub/Sub supporting 50 concurrent editors.
+- Headless E-Commerce Platform: Deployed modular store with React, Tailwind CSS, Shopify Storefront GraphQL API, and Stripe Checkout.

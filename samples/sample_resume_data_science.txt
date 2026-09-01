@@ -1,0 +1,85 @@
+SARAH CHEN
+Senior Data Scientist | Machine Learning Engineer
+Email: sarah.chen@email.com | Phone: (415) 987-6543
+LinkedIn: linkedin.com/in/sarahchen | GitHub: github.com/sarahchen
+Portfolio: sarahchen.dev
+
+SUMMARY
+Results-driven Senior Data Scientist with 5+ years of experience designing and deploying production machine learning systems at scale. Expertise in NLP, computer vision, and recommendation systems. Led cross-functional teams to deliver data products that generated $4M+ in annual revenue impact. Passionate about building ethical AI solutions with measurable business outcomes.
+
+EXPERIENCE
+
+Senior Data Scientist | TechCorp AI Labs
+March 2023 - Present
+- Architected and deployed a real-time recommendation engine serving 2M+ daily users, increasing user engagement by 35%
+- Developed a custom transformer-based NLP pipeline for customer support automation, reducing ticket resolution time by 60%
+- Built end-to-end MLOps infrastructure using MLflow, Docker, and Kubernetes, cutting model deployment time from 2 weeks to 3 hours
+- Led a team of 5 data scientists and engineers on a fraud detection system achieving 97.3% precision
+- Implemented A/B testing framework to validate ML model improvements across 15+ experiments
+- Collaborated with product and engineering stakeholders to define data strategy and KPI dashboards
+
+Data Scientist | DataStream Analytics
+June 2021 - February 2023
+- Designed and trained deep learning models for image classification with 94% accuracy on proprietary datasets
+- Built automated ETL pipelines processing 500GB+ daily using Apache Airflow, Spark, and AWS S3
+- Created interactive Tableau and Power BI dashboards used by C-suite for quarterly business reviews
+- Developed customer churn prediction model using XGBoost, saving an estimated $1.2M annually
+- Performed statistical analysis including hypothesis testing, regression modeling, and time series forecasting
+
+Junior Data Analyst | StartUp Innovations
+August 2019 - May 2021
+- Conducted exploratory data analysis on customer behavior datasets using Pandas, NumPy, and Matplotlib
+- Built SQL-based reporting automation reducing manual reporting effort by 80%
+- Assisted in implementing a recommendation system prototype using collaborative filtering
+- Presented data insights and actionable recommendations to stakeholders in weekly review meetings
+
+EDUCATION
+
+Master of Science in Data Science
+Stanford University | 2019
+GPA: 3.9/4.0 | Thesis: "Transfer Learning for Low-Resource NLP Tasks"
+
+Bachelor of Science in Computer Science
+University of California, Berkeley | 2017
+GPA: 3.7/4.0 | Minor in Statistics
+
+SKILLS
+
+Programming: Python, R, SQL, JavaScript, Scala, Bash
+ML/AI: TensorFlow, PyTorch, scikit-learn, XGBoost, LightGBM, Keras, Hugging Face Transformers
+Data Engineering: Pandas, NumPy, Apache Spark, Airflow, Kafka, dbt
+Databases: PostgreSQL, MongoDB, Redis, Snowflake, BigQuery, Elasticsearch
+Cloud & DevOps: AWS (S3, EC2, SageMaker, Lambda), GCP (Vertex AI), Docker, Kubernetes, Terraform
+Visualization: Tableau, Power BI, Plotly, Matplotlib, Seaborn, Looker
+NLP: BERT, GPT, spaCy, NLTK, LangChain, Sentiment Analysis, Named Entity Recognition
+MLOps: MLflow, Weights & Biases, DVC, Great Expectations, Feature Store
+Soft Skills: Leadership, Cross-functional Collaboration, Stakeholder Management, Agile, Scrum, Mentoring
+
+CERTIFICATIONS
+
+- AWS Certified Machine Learning - Specialty (2024)
+- Google Professional Data Engineer (2023)
+- TensorFlow Developer Certificate (2022)
+- Deep Learning Specialization - Coursera / Andrew Ng (2021)
+
+PROJECTS
+
+Real-Time Fraud Detection Platform
+- Built a streaming fraud detection system processing 10K+ transactions/second with sub-100ms latency
+- Technologies: Python, Apache Kafka, PyTorch, FastAPI, Docker, AWS ECS
+- Achieved 97.3% precision with less than 0.5% false positive rate
+
+Multi-Language Sentiment Analysis Engine
+- Developed a multilingual sentiment analysis tool supporting 12 languages using fine-tuned BERT models
+- Technologies: Python, Hugging Face Transformers, FastAPI, React, Docker
+- Deployed on AWS with auto-scaling, handling 50K+ daily API requests
+
+Automated Resume Screening System
+- Created an NLP-powered resume screening tool using TF-IDF and named entity recognition
+- Technologies: Python, spaCy, scikit-learn, Streamlit, PostgreSQL
+- Reduced HR screening time by 70% for a 500-person organization
+
+PUBLICATIONS
+
+- Chen, S. et al. (2023). "Efficient Transfer Learning for Domain-Specific NLP." AAAI Conference.
+- Chen, S., Park, J. (2022). "Scalable Feature Engineering for Real-Time ML Systems." MLSys Workshop.

@@ -14,5 +14,11 @@
     ],
     "data_engineer": [
         "python", "sql", "spark", "airflow", "etl", "aws", "data warehouse"
+    ],
+    "cybersecurity_analyst": [
+        "cybersecurity", "network security", "penetration testing", "siem", "splunk", "wireshark", "firewall", "incident response", "vulnerability assessment", "zero trust"
+    ],
+    "web_developer": [
+        "javascript", "typescript", "react", "next.js", "node.js", "html", "css", "api", "tailwind", "full stack"
     ]
 }

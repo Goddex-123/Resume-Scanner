@@ -162,10 +162,12 @@ def create_job_match_chart(matches):
             tickfont=dict(color="#64748b"),
         ),
         yaxis=dict(
-            gridcolor="rgba(139,92,246,0.06)", tickfont=dict(color="#94a3b8", size=12)
+            gridcolor="rgba(139,92,246,0.06)",
+            tickfont=dict(color="#cbd5e1", size=12),
+            automargin=True,
         ),
         height=320,
-        margin=dict(l=20, r=30, t=15, b=25),
+        margin=dict(l=140, r=30, t=15, b=25),
         bargap=0.3,
     )
     return fig
@@ -222,9 +224,9 @@ def create_score_breakdown_chart(scores_dict):
             title=dict(text="Score", font=dict(color="#64748b", size=11)),
             tickfont=dict(color="#64748b"),
         ),
-        yaxis=dict(tickfont=dict(color="#94a3b8", size=11), automargin=True),
+        yaxis=dict(tickfont=dict(color="#cbd5e1", size=11), automargin=True),
         height=250,
-        margin=dict(l=10, r=20, t=10, b=30),
+        margin=dict(l=130, r=20, t=10, b=30),
         bargap=0.35,
     )
     return fig
@@ -333,9 +335,9 @@ def create_text_quality_chart(quality_metrics):
             zeroline=False,
             tickfont=dict(color="#64748b"),
         ),
-        yaxis=dict(tickfont=dict(color="#94a3b8", size=11), automargin=True),
+        yaxis=dict(tickfont=dict(color="#cbd5e1", size=11), automargin=True),
         height=200,
-        margin=dict(l=10, r=20, t=10, b=20),
+        margin=dict(l=140, r=20, t=10, b=20),
         bargap=0.35,
     )
     return fig
@@ -388,5 +390,57 @@ def create_ai_breakdown_chart(detailed_scores):
         showlegend=False,
         height=280,
         margin=dict(l=60, r=60, t=20, b=20),
+    )
+    return fig
+
+
+def create_direct_jd_match_chart(breakdown: dict):
+    """Create a horizontal bar chart showing breakdown of direct JD matching."""
+    if not breakdown:
+        return go.Figure()
+
+    labels = [k.replace("_", " ").title() for k in breakdown.keys()]
+    values = list(breakdown.values())
+
+    colors = []
+    for v in values:
+        if v >= 75:
+            colors.append("#10b981")
+        elif v >= 50:
+            colors.append("#06b6d4")
+        elif v >= 35:
+            colors.append("#f59e0b")
+        else:
+            colors.append("#ef4444")
+
+    fig = go.Figure(
+        go.Bar(
+            x=values,
+            y=labels,
+            orientation="h",
+            marker=dict(color=colors, cornerradius=5),
+            text=[f"{v:.1f}%" for v in values],
+            textposition="inside",
+            textfont=dict(color="white", size=12, family="JetBrains Mono"),
+            hovertemplate="%{y}: %{x:.1f}%<extra></extra>",
+        )
+    )
+
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#e2e8f0", family="Inter"),
+        xaxis=dict(
+            range=[0, 100],
+            gridcolor="rgba(139,92,246,0.1)",
+            showgrid=True,
+            zeroline=False,
+            title=dict(text="Alignment (%)", font=dict(color="#94a3b8", size=11)),
+            tickfont=dict(color="#64748b"),
+        ),
+        yaxis=dict(tickfont=dict(color="#cbd5e1", size=11), automargin=True),
+        height=240,
+        margin=dict(l=150, r=20, t=10, b=30),
+        bargap=0.35,
     )
     return fig
