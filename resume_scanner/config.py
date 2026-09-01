@@ -60,7 +60,28 @@ class JobMatchingConfig:
     )
 
 
+@dataclass
+class HybridMatchingConfig:
+    """Configurable weights for the hybrid ML + rule-based matching engine."""
+
+    weights: Dict[str, float] = field(
+        default_factory=lambda: {
+            "semantic_similarity": 0.35,
+            "required_skills": 0.30,
+            "preferred_skills": 0.10,
+            "experience_alignment": 0.10,
+            "education_alignment": 0.05,
+            "lexical_similarity": 0.10,
+        }
+    )
+    embedding_model: str = "all-MiniLM-L6-v2"
+    use_ml_model: bool = True
+    model_dir: str = "models"
+
+
 # Default shared instances
 DEFAULT_PARSER_CONFIG = ParserConfig()
 DEFAULT_ATS_CONFIG = ATSScoringConfig()
 DEFAULT_JOB_MATCHING_CONFIG = JobMatchingConfig()
+DEFAULT_HYBRID_CONFIG = HybridMatchingConfig()
+

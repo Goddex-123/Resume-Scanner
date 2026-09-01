@@ -8,7 +8,7 @@
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-brightgreen?style=for-the-badge&logo=streamlit)](https://resume-scanner-sohambarate.streamlit.app)
 
-> **A production-grade Applicant Tracking System (ATS) analyzer and resume optimization engine built with modern NLP, structured document decomposition, interval-merging experience analysis, and direct Job Description qualification matching.**
+> **A production-grade Applicant Tracking System (ATS) analyzer and hybrid resume matching engine built with Semantic Embeddings, Machine Learning, structured document decomposition, interval-merging experience analysis, and deterministic NLP.**
 
 ---
 
@@ -18,6 +18,10 @@ The **Resume Scanner** provides candidates and career engineers with transparent
 
 ### Key Capabilities
 
+- **Hybrid Machine Learning Matching Engine**:
+  - Semantic Embeddings using `Sentence-BERT (all-MiniLM-L6-v2)` for deep section-aware context matching (Experience ↔ Responsibilities).
+  - Pre-trained ML classifiers (Gradient Boosting) evaluating 26+ engineered features to predict candidate fit.
+  - Generates transparent feature contributions to explain exactly *why* a candidate scored high or low.
 - **Robust Multi-Format Parsing**:
   - High-fidelity PDF extraction via **PyMuPDF (`fitz`)**, preserving paragraph flows, multi-page structures, and detecting scanned/image-only PDFs.
   - Structure-aware Word extraction via **`python-docx`**, reading body paragraphs and structured tables in natural document order.
@@ -68,12 +72,20 @@ graph TD
         CleanText --> AIStyle["Writing Authenticity & Cliché Analyzer"]
     end
 
+    subgraph ML_Pipeline ["Machine Learning Layer (Graceful Degradation)"]
+        CleanText --> SemanticEnc["SemanticEncoder: all-MiniLM-L6-v2"]
+        TargetJD --> SemanticEnc
+        SemanticEnc --> FeatExt["FeatureExtractor: 26+ Features"]
+        FeatExt --> MLModel["HybridMatcher: Gradient Boosting Classifier"]
+    end
+
     subgraph Matching_Engine ["ATS & Matching Core"]
         TargetJD --> JDAnalyzer["JobDescriptionAnalyzer"]
         JDAnalyzer --> ReqPrefSplit["Required vs Preferred Skill Matrix"]
         CleanText --> JobMatcher["JobMatcher: TF-IDF Cosine Similarity"]
         ReqPrefSplit --> JobMatcher
         CleanText --> ATSScorer["ATSScorer: Explainable Scoring & Quality Heuristics"]
+        JobMatcher --> MLModel
     end
 
     subgraph Presentation_Layer ["UI / UX Dashboard"]
@@ -178,7 +190,16 @@ Resume-Scanner/
 │   ├── sample_resume_cybersecurity.txt  # Alex Rivera (SOC & Pen-Testing)
 │   ├── sample_resume_web_developer.txt  # David Kim (Full-Stack TypeScript & React)
 │   └── sample_resume_data_science.txt   # Sarah Chen (Machine Learning & MLOps)
+├── models/                    # Trained ML Models & Weights (Excluded from Git)
+├── notebooks/                 # Jupyter Notebooks for ML Dataset & Training Pipeline
+├── reports/                   # Model Evaluation Reports
 ├── resume_scanner/
+│   ├── ml/                    # Machine Learning & Semantic Pipeline
+│   │   ├── dataset.py         # Synthetic Training Dataset Generator
+│   │   ├── embeddings.py      # Sentence-BERT Semantic Encoder
+│   │   ├── features.py        # ML Feature Engineering Pipeline
+│   │   ├── inference.py       # Hybrid ML & NLP Matching Engine
+│   │   └── model.py           # Model Training & Cross-Validation
 │   ├── __init__.py            # Package exports
 │   ├── config.py              # Centralized dataclass configurations
 │   ├── parser.py              # Multi-format parser, scanned PDF detection & section extractor

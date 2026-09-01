@@ -8,6 +8,10 @@ from typing import Optional
 import streamlit as st
 
 from resume_scanner import ResumeParser, NLPEngine, ATSScorer, AIDetector, JobMatcher
+try:
+    from resume_scanner import ML_AVAILABLE, SemanticEncoder, HybridMatcher, get_encoder
+except ImportError:
+    ML_AVAILABLE = False
 from resume_scanner.ui.styles import CUSTOM_CSS
 from resume_scanner.ui.charts import (
     create_gauge_chart,
@@ -27,6 +31,19 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+@st.cache_resource
+def load_ml_components():
+    """Load the ML embeddings model and hybrid matcher once."""
+    if ML_AVAILABLE:
+        try:
+            encoder = get_encoder()
+            from resume_scanner.ml.inference import create_hybrid_matcher
+            matcher = create_hybrid_matcher(encoder=encoder, model_dir="models")
+            return encoder, matcher
+        except Exception as e:
+            return None, None
+    return None, None
 
 # Apply Premium CSS
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
@@ -244,6 +261,19 @@ def run_analysis(
                     text, job_description_text, job_title_input
                 )
                 job_results["direct_match"] = True
+
+                # Hybrid ML Matching
+                encoder, hybrid_matcher = load_ml_components()
+                if hybrid_matcher:
+                    progress.progress(90, text="🔬 Computing semantic embeddings & ML predictions...")
+                    ml_results = hybrid_matcher.match(
+                        resume_text=text,
+                        jd_text=job_description_text,
+                        rule_based_results=job_results,
+                        resume_sections=sections_found,
+                    )
+                    if ml_results:
+                        job_results["ml_results"] = ml_results
             else:
                 job_results = job_matcher.match(text)
                 job_results["direct_match"] = False
@@ -276,13 +306,26 @@ def run_analysis(
         match_label = "Best Role Fit"
         match_icon = "💼"
 
-    c1, c2, c3, c4 = st.columns(4)
-    for col, icon, val, label in [
+    c1, c2, c3, c4, c5 = st.columns(5)
+    
+    metrics = [
         (c1, "📋", f"{ats_score:.0f}", "ATS Score"),
         (c2, "🧠", f"{total_skills}", "Skills Found"),
         (c3, "✍️", f"{ai_prob:.0f}%", "AI Phrasing Score"),
         (c4, match_icon, match_val, match_label),
-    ]:
+    ]
+    
+    ml_results = job_results.get("ml_results", {}) if job_results.get("direct_match") else {}
+    if ml_results and ml_results.get("has_trained_model"):
+        prob = ml_results.get("ml_prediction", {}).get("match_probability", 0.0)
+        metrics.append((c5, "🤖", f"{prob*100:.0f}%", "ML Match Prob"))
+    elif ml_results and ml_results.get("has_semantic"):
+        sem = ml_results.get("semantic_similarity", {}).get("full_document", 0.0)
+        metrics.append((c5, "🌐", f"{sem*100:.0f}%", "Semantic Sim"))
+    else:
+        metrics.append((c5, "🤖", "N/A", "ML Disabled"))
+
+    for col, icon, val, label in metrics:
         with col:
             st.markdown(
                 f"""
@@ -761,6 +804,33 @@ def run_analysis(
                     unsafe_allow_html=True,
                 )
 
+                ml_res = job_results.get("ml_results", {})
+                if ml_res and ml_res.get("has_semantic"):
+                    st.markdown("<hr>", unsafe_allow_html=True)
+                    st.markdown('<h3 class="section-header">🔬 ML & Semantic Analysis</h3>', unsafe_allow_html=True)
+                    
+                    if ml_res.get("has_trained_model"):
+                        pred = ml_res["ml_prediction"]
+                        prob = pred["match_probability"]
+                        st.markdown(
+                            f'<div style="font-size:1.1rem; font-weight:700; color:#8b5cf6; margin-bottom:12px;">' 
+                            f'ML Match Probability: {prob*100:.1f}%</div>',
+                            unsafe_allow_html=True,
+                        )
+                    
+                    fc = ml_res.get("feature_contributions", {})
+                    if fc.get("positive") or fc.get("negative"):
+                        st.markdown('<div style="font-size:0.95rem; font-weight:600; margin-bottom:8px;">Explainability Breakdown</div>', unsafe_allow_html=True)
+                        for p in fc.get("positive", []):
+                            st.markdown(f'<div class="feedback-item feedback-good">✅ <strong>{p["signal"]}</strong>: {p["value"]}</div>', unsafe_allow_html=True)
+                        for n in fc.get("negative", []):
+                            st.markdown(f'<div class="feedback-item feedback-danger">⚠️ <strong>{n["signal"]}</strong>: {n["value"]}</div>', unsafe_allow_html=True)
+                    
+                    with st.expander("🔧 Technical Details (ML)"):
+                        st.json(ml_res.get("model_info", {}))
+                        if ml_res.get("has_trained_model"):
+                            st.json(ml_res["ml_prediction"].get("top_features", []))
+
             else:
                 # Benchmark Roles Mode
                 matches = job_results.get("all_matches", [])
@@ -1015,6 +1085,9 @@ def main():
 <span class="sidebar-tech-badge">python-docx</span>
 <span class="sidebar-tech-badge">NLP / TF-IDF</span>
 <span class="sidebar-tech-badge">Interval Merging</span>
+"""
++ (f'<span class="sidebar-tech-badge" style="background:rgba(139,92,246,0.15); color:#c4b5fd; border-color:rgba(139,92,246,0.3);">Sentence-BERT</span>' if ML_AVAILABLE else '')
++ """
 </div>
         """,
             unsafe_allow_html=True,

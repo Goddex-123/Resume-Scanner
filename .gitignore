@@ -31,3 +31,9 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Machine Learning Models
+models/*.joblib
+models/*.pkl
+*.pt
+*.bin
