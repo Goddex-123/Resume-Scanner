@@ -4,8 +4,11 @@ Handles skill extraction, entity recognition, and text analysis using NLP.
 """
 
 import re
+import logging
 from datetime import datetime
 from typing import List, Dict, Set, Tuple, Any
+
+logger = logging.getLogger(__name__)
 
 
 class NLPEngine:
@@ -594,12 +597,12 @@ class NLPEngine:
                 try:
                     self.nlp = spacy.load("en_core_web_sm")
                 except OSError:
-                    print(
-                        "Warning: spaCy model 'en_core_web_sm' not found. Using pattern matching only."
+                    logger.warning(
+                        "spaCy model 'en_core_web_sm' not found. Using pattern matching only."
                     )
                     self.use_spacy = False
             except ImportError:
-                print("Warning: spaCy not installed. Using pattern matching only.")
+                logger.warning("spaCy not installed. Using pattern matching only.")
                 self.use_spacy = False
 
     def extract_skills(self, text: str) -> Dict[str, List[str]]:

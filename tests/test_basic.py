@@ -22,3 +22,12 @@ def test_files_exist():
     required_files = ["app.py", "requirements.txt", "README.md"]
     for f in required_files:
         assert os.path.isfile(f), f"File {f} is missing"
+
+
+def test_package_exports():
+    """Test that all declared package exports in __all__ are accessible."""
+    import resume_scanner
+    for symbol in resume_scanner.__all__:
+        assert hasattr(resume_scanner, symbol), f"Export {symbol} is missing from resume_scanner"
+        assert getattr(resume_scanner, symbol) is not None
+

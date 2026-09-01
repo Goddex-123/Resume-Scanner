@@ -16,7 +16,9 @@
     "R",
     "MATLAB",
     "Julia",
-    "SQL"
+    "SQL",
+    "Bash",
+    "PowerShell"
   ],
   "frameworks": {
     "python": [
@@ -30,7 +32,7 @@
       "PyTorch",
       "scikit-learn"
     ],
-    "javascript": ["React", "Angular", "Vue", "Node.js", "Express", "Next.js"],
+    "javascript": ["React", "Angular", "Vue", "Node.js", "Express", "Next.js", "Tailwind CSS"],
     "java": ["Spring", "Spring Boot", "Hibernate"],
     "other": ["Rails", ".NET", "Flutter", "React Native"]
   },
@@ -43,9 +45,25 @@
     "Feature Engineering",
     "Model Deployment",
     "A/B Testing",
-    "Statistics"
+    "Statistics",
+    "MLOps"
   ],
-  "cloud_platforms": ["AWS", "GCP", "Azure", "Docker", "Kubernetes"],
+  "cybersecurity_tools": [
+    "Splunk",
+    "Wireshark",
+    "Metasploit",
+    "Burp Suite",
+    "Nmap",
+    "Nessus",
+    "Snort",
+    "Suricata",
+    "CrowdStrike",
+    "Qualys",
+    "Kali Linux",
+    "Firewalls",
+    "SIEM"
+  ],
+  "cloud_platforms": ["AWS", "GCP", "Azure", "Docker", "Kubernetes", "CI/CD"],
   "databases": [
     "MySQL",
     "PostgreSQL",
