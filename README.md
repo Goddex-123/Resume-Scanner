@@ -3,7 +3,7 @@
 ![Python 3.9+](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Docker](https://img.shields.io/badge/docker-ready-blue)
-![Tests](https://img.shields.io/badge/pytest-22%20passed-brightgreen)
+![Tests](https://img.shields.io/badge/pytest-25%20passed-brightgreen)
 ![CI Status](https://github.com/Goddex-123/Resume-Scanner/actions/workflows/ci.yml/badge.svg)
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-brightgreen?style=for-the-badge&logo=streamlit)](https://resume-scanner-sohambarate.streamlit.app)
@@ -46,38 +46,38 @@ The **Resume Scanner** provides candidates and career engineers with transparent
 
 ```mermaid
 graph TD
-    subgraph Input_Layer [Document & Criteria Input]
-        ResumeFile[Resume File (PDF, DOCX, TXT)]
-        TargetJD[Target Job Description (Optional)]
-        DemoSuite[3-Field Demo Profiles]
+    subgraph Input_Layer ["Document & Criteria Input"]
+        ResumeFile["Resume File (PDF, DOCX, TXT)"]
+        TargetJD["Target Job Description (Optional)"]
+        DemoSuite["3-Field Demo Profiles"]
     end
 
-    subgraph Parsing_Engine [Robust Extraction Layer]
-        ResumeFile --> Parser[ResumeParser Engine]
+    subgraph Parsing_Engine ["Robust Extraction Layer"]
+        ResumeFile --> Parser["ResumeParser Engine"]
         DemoSuite --> Parser
-        Parser --> DocModel[ResumeDocument Dataclass]
-        DocModel --> CleanText[Layout-Preserving Text Normalizer]
-        DocModel --> SectionDecomp[Context-Aware Section Parser]
-        DocModel --> ContactExtract[International Contact & Link Normalizer]
+        Parser --> DocModel["ResumeDocument Dataclass"]
+        DocModel --> CleanText["Layout-Preserving Text Normalizer"]
+        DocModel --> SectionDecomp["Context-Aware Section Parser"]
+        DocModel --> ContactExtract["International Contact & Link Normalizer"]
     end
 
-    subgraph NLP_Analysis [NLP & Semantic Engine]
-        CleanText --> SkillNorm[Skill Normalizer & Alias Canonicalizer]
-        CleanText --> DateMerge[Date Range & Interval Merging Calculator]
-        CleanText --> BulletMetrics[Achievement & Metric Density Classifier]
-        CleanText --> AIStyle[Writing Authenticity & Cliché Analyzer]
+    subgraph NLP_Analysis ["NLP & Semantic Engine"]
+        CleanText --> SkillNorm["Skill Normalizer & Alias Canonicalizer"]
+        CleanText --> DateMerge["Date Range & Interval Merging Calculator"]
+        CleanText --> BulletMetrics["Achievement & Metric Density Classifier"]
+        CleanText --> AIStyle["Writing Authenticity & Cliché Analyzer"]
     end
 
-    subgraph Matching_Engine [ATS & Matching Core]
-        TargetJD --> JDAnalyzer[JobDescriptionAnalyzer]
-        JDAnalyzer --> ReqPrefSplit[Required vs Preferred Skill Matrix]
-        CleanText --> JobMatcher[JobMatcher: TF-IDF Cosine Similarity]
+    subgraph Matching_Engine ["ATS & Matching Core"]
+        TargetJD --> JDAnalyzer["JobDescriptionAnalyzer"]
+        JDAnalyzer --> ReqPrefSplit["Required vs Preferred Skill Matrix"]
+        CleanText --> JobMatcher["JobMatcher: TF-IDF Cosine Similarity"]
         ReqPrefSplit --> JobMatcher
-        CleanText --> ATSScorer[ATSScorer: Explainable Scoring & Quality Heuristics]
+        CleanText --> ATSScorer["ATSScorer: Explainable Scoring & Quality Heuristics"]
     end
 
-    subgraph Presentation_Layer [UI / UX Dashboard]
-        JobMatcher --> StreamlitApp[Streamlit v2.0 Dashboard]
+    subgraph Presentation_Layer ["UI / UX Dashboard"]
+        JobMatcher --> StreamlitApp["Streamlit Dashboard"]
         ATSScorer --> StreamlitApp
         SkillNorm --> StreamlitApp
         BulletMetrics --> StreamlitApp
@@ -153,7 +153,7 @@ Access the application at `http://localhost:8501`.
 
 ## 🧪 Testing & Quality Assurance
 
-The test suite contains 22 automated tests covering parser integrity, interval merging, skill alias normalization, target JD qualification extraction, and explainable ATS scoring:
+The test suite contains 25 automated tests covering parser integrity, interval merging, skill alias normalization, target JD qualification extraction, and explainable ATS scoring:
 
 ```bash
 # Run the complete test suite
